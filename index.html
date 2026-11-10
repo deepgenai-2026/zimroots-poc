@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZimRoots · Family Connection Lab</title>
+  <meta name="description" content="A public, fully fictional demonstration of a Zimbabwean family-network discovery platform." />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-symbol" aria-hidden="true"><span>✦</span></div>
+        <div><div class="brand-name">ZimRoots</div><div class="brand-caption">Family connection lab</div></div>
+      </div>
+      <div class="demo-pill"><span class="demo-dot"></span> PUBLIC FICTIONAL POC</div>
+      <nav class="sidebar-nav" aria-label="Primary navigation">
+        <button class="nav-item active" data-view="network"><span class="nav-icon">◎</span> Family network</button>
+        <button class="nav-item" data-view="discover"><span class="nav-icon">⌁</span> Discover relationships</button>
+        <button class="nav-item" data-view="archive"><span class="nav-icon">▧</span> Family archive</button>
+        <button class="nav-item" data-view="privacy"><span class="nav-icon">◇</span> Privacy & identity</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="note-label">DATA PROVENANCE</div>
+        <p>All people, dates, locations, family links and archives in this public demonstration are <strong>completely fictional</strong>.</p>
+        <div class="footer-line">Built for DeepGenAI · PoC v1.0</div>
+      </div>
+    </aside>
+    <div class="workspace">
+      <header class="topbar">
+        <div class="breadcrumb">ZimRoots <span>/</span> <span id="breadcrumb-current">Family network</span></div>
+        <div class="top-actions"><span class="status-label"><span class="status-dot"></span> Demo dataset</span><div class="avatar-circle" title="Demo profile">ZR</div></div>
+      </header>
+      <main class="page">
+        <section class="hero">
+          <div class="eyebrow">YOUR FAMILY STORY, CONNECTED</div>
+          <h1 id="page-title">Discover how we belong.</h1>
+          <p id="page-subtitle">Explore four generations of family connections using an interactive relationship graph.</p>
+        </section>
+        <section id="overview-metrics" class="metrics" aria-label="Dataset summary">
+          <article class="metric"><div class="metric-label">People in network</div><div class="metric-value" id="metric-people">—</div><div class="metric-foot">Named people and unresolved labels</div></article>
+          <article class="metric"><div class="metric-label">Family connections</div><div class="metric-value" id="metric-links">—</div><div class="metric-foot">Original parent–child links</div></article>
+          <article class="metric"><div class="metric-label">Generations</div><div class="metric-value" id="metric-generations">—</div><div class="metric-foot">Inferred from source graph</div></article>
+          <article class="metric"><div class="metric-label">Fictional deceased</div><div class="metric-value" id="metric-deceased">—</div><div class="metric-foot">Demonstration records only</div></article>
+        </section>
+
+        <section class="view active" id="view-network">
+          <div class="network-grid">
+            <div class="network-panel panel">
+              <div class="panel-head">
+                <div><h2>Family constellation</h2><p>Click a person to reveal their family connections.</p></div>
+                <div class="network-actions"><button id="ego-button" class="chip active">Near me</button><button id="all-button" class="chip">Full network</button></div>
+              </div>
+              <div class="network-toolbar"><div class="search-wrap"><span>⌕</span><input id="person-search" placeholder="Find a family member by name" autocomplete="off" aria-label="Find a family member" /><div id="search-results" class="search-results" hidden></div></div><div class="zoom-group"><button id="zoom-out" aria-label="Zoom out">−</button><button id="reset-view" aria-label="Reset view">↺</button><button id="zoom-in" aria-label="Zoom in">+</button></div></div>
+              <div class="graph-shell"><svg id="family-graph" role="img" aria-label="Interactive family relationship graph" viewBox="0 0 1050 600"><g id="graph-content"></g></svg><div class="graph-hint">Scroll to zoom · Drag the canvas to pan · Select a node to explore</div></div>
+              <div class="graph-footer"><div class="legend"><span><i class="key green"></i> Earlier generation</span><span><i class="key gold"></i> Later generation</span><span><i class="key ring"></i> Selected person</span><span><i class="key memorial"></i> Fictional deceased</span></div><span class="graph-count" id="graph-count"></span></div>
+            </div>
+            <div class="detail-panel panel" id="profile-card"><div class="profile-loading">Select a person to view details</div></div>
+          </div>
+        </section>
+
+        <section class="view" id="view-discover">
+          <div class="two-column">
+            <article class="panel relation-panel"><div class="section-kicker">RELATIONSHIP EXPLORER</div><h2>How are we related?</h2><p>Choose any two profiles. The graph finds a family path and explains the likely relationship.</p>
+              <div class="relation-inputs"><label>First person<select id="relation-a"></select></label><label>Second person<select id="relation-b"></select></label></div>
+              <button id="find-connection" class="primary-button">Find family connection <span>→</span></button>
+              <div id="relationship-result" class="relationship-result"><span class="small-mute">Select two profiles to begin.</span></div>
+            </article>
+            <article class="panel intelligence-panel"><div class="section-kicker">NETWORK INSIGHTS</div><h2>Insights from connections</h2><p>Graph rules can suggest relationships from shared parents and ancestors. Results remain provisional until reviewed.</p>
+              <div class="insight-row"><span class="insight-icon">◎</span><div><strong>Siblings and cousins</strong><p>Derived from documented parent–child paths.</p></div></div>
+              <div class="insight-row"><span class="insight-icon">◌</span><div><strong>Possible duplicate identities</strong><p>Similar labels are highlighted for human review, never merged automatically.</p></div></div>
+              <div class="insight-row"><span class="insight-icon">◇</span><div><strong>Evidence matters</strong><p>These links are fictional and are not verified against government records.</p></div></div>
+            </article>
+          </div>
+          <div class="panel examples-panel"><div class="panel-head"><div><h2>Suggested family discoveries</h2><p>Examples using the fictional relationship graph.</p></div><span class="count-badge" id="discovery-count"></span></div><div id="discoveries-list" class="discoveries-list"></div></div>
+          <div class="panel review-panel"><div class="panel-head"><div><h2>Records to review</h2><p>Identity labels that need a human decision before any verified family matching.</p></div></div><div id="review-list"></div></div>
+        </section>
+
+        <section class="view" id="view-archive">
+          <div class="section-split"><div><h2>Preserve stories across generations.</h2><p>A concept gallery for photographs, letters and oral histories. All examples below are fictional.</p></div><span class="soft-badge">SYNTHETIC RECORDS</span></div>
+          <div id="archive-grid" class="archive-grid"></div>
+        </section>
+
+        <section class="view" id="view-privacy">
+          <div class="two-column">
+            <article class="panel privacy-panel"><div class="section-kicker">IDENTITY VERIFICATION</div><h2>Identity is the foundation.</h2><p>In a production service, verification would use an authorised provider such as Ndasenda, subject to contractual and regulatory approval.</p>
+              <div class="identity-card"><div class="identity-icon">▣</div><div><strong>Demo identity check</strong><p id="identity-message">No actual ID or personal document is required.</p></div><span class="soft-badge" id="identity-badge">MOCK ONLY</span></div>
+              <button class="primary-button" id="simulate-verification">Run mock verification <span>→</span></button>
+              <p class="legal-note">This does not contact Ndasenda, the Civil Registry or any external service. It does not validate a real person's identity.</p>
+            </article>
+            <article class="panel privacy-panel"><div class="section-kicker">PRIVACY CONTROLS</div><h2>You choose what to share.</h2><p>These settings illustrate how individual control would work. Changes here are local to this demo.</p>
+              <label class="switch-row"><span><strong>Be discoverable</strong><small>Allow relatives to find a profile in search</small></span><input id="setting-discoverable" type="checkbox" /><i></i></label>
+              <label class="switch-row"><span><strong>Allow connection requests</strong><small>Permit relatives to request contact</small></span><input id="setting-requests" type="checkbox" checked /><i></i></label>
+              <label class="switch-row"><span><strong>Share archive entries</strong><small>Let approved relatives view family memories</small></span><input id="setting-archive" type="checkbox" /><i></i></label>
+              <div class="privacy-status" id="privacy-status">Settings are simulated; no consent has been collected.</div>
+            </article>
+          </div>
+          <div class="panel distribution-panel"><div><div class="section-kicker">DIASPORA CONNECTIONS</div><h2>Family, across borders</h2><p>Locations include your revisions alongside unedited synthetic examples; this is not a verified residence register.</p></div><div id="country-bars"></div></div>
+          <div class="privacy-banner"><strong>Before any real-world launch</strong><p>Obtain a lawful basis to process and disclose family relationships, implement secure authentication and server-side consent controls, conduct a privacy impact assessment and agree permitted data access with any verification partner.</p></div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="./app.js" defer></script>
+</body>
+</html>
